@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Products</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <h1>Products</h1>
+        <h2><a href="/products/create" class="btn btn-success">Create product</a></h2>
+    </div>
+    <div class="row">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Stock</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${products.empty}">
+                <td colspan="4">No products available</td>
+            </tr>
+            <tr th:each="product : ${products}">
+                <td><span th:text="${product.id}">ID</span></td>
+                <td><span th:text="${product.name}">Name</span></td>
+                <td><span th:text="${product.price}">Price</span></td>
+                <td><span th:text="${product.stock}">Stock</span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

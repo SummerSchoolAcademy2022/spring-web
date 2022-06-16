@@ -1,15 +1,16 @@
 package com.example.springwebtraining.controller;
 
-import com.example.springwebtraining.model.PriceRange;
 import com.example.springwebtraining.model.Product;
 import com.example.springwebtraining.service.ProductService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
-
-@RestController
-@RequestMapping("/api/products")
+@Controller
+@RequestMapping("products")
 public class ProductsController {
 
     private final ProductService productService;
@@ -19,24 +20,20 @@ public class ProductsController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Product>> getAll() {
-        return ResponseEntity.ok(productService.findAll());
+    public String getAll(Model model) {
+        var products = productService.findAll();
+        model.addAttribute("products", products);
+        return "products/list";
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Product> getById(@PathVariable("id") String id) throws Exception {
-        return ResponseEntity.ok(productService.findById(id));
+    @GetMapping("/create")
+    public String showCreateForm(@ModelAttribute Product product) {
+        return "products/create";
     }
 
-    @GetMapping("/filter")
-    public ResponseEntity<List<Product>> getByPrice(@RequestParam("minPrice") Double minPrice,
-                                                    @RequestParam("maxPrice") Double maxPrice) {
-        return ResponseEntity.ok(productService.findAllByPrice(new PriceRange(minPrice, maxPrice)));
+    @PostMapping("/create")
+    public String create(@ModelAttribute Product product, Model model) {
+        productService.create(product);
+        return "redirect:/products";
     }
-
-    @PostMapping
-    public ResponseEntity<Product> create(@RequestBody Product product) {
-        return ResponseEntity.ok(productService.create(product));
-    }
-
 }
