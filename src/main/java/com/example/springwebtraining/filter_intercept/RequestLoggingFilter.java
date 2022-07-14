@@ -19,9 +19,6 @@ public class RequestLoggingFilter implements Filter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RequestLoggingFilter.class);
 
-    private static final String AUTH_HEADER_KEY = "x-api-key";
-    private static final String KEY = "123456"; // Btw, this should not be here ;)
-
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         LOGGER.info("########## Initiating Request Logging Filter ##########");
@@ -32,9 +29,6 @@ public class RequestLoggingFilter implements Filter {
             throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        if (!KEY.equals(request.getHeader(AUTH_HEADER_KEY))) {
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "The api key provided is not valid.");
-        }
         chain.doFilter(request, response);
     }
 
