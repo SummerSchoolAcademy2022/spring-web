@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 public enum ErrorCode {
-    UNAUTHORIZED("UNAUTHORIZED", "The api key provided is not valid.", HttpStatus.UNAUTHORIZED),
+    UNAUTHORIZED("UNAUTHORIZED", "Please login.", HttpStatus.UNAUTHORIZED),
     GENERAL_VALIDATION_ERROR("GENERAL_VALIDATION_ERROR", "The request is not valid.", HttpStatus.BAD_REQUEST),
     ;
 
